@@ -103,14 +103,17 @@ IF EXIST ..\bin\Release-windows-x86_64\AYR\AYR.dll\ (xcopy /Q /E /Y /I ..\bin\Re
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Mesh.h" />
     <ClInclude Include="src\color.h" />
     <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\gl.h" />
     <ClInclude Include="src\img.h" />
+    <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\vector.h" />
     <ClInclude Include="src\Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\color.cpp" />
     <ClCompile Include="src\gl.cpp" />
     <ClCompile Include="src\img.cpp" />

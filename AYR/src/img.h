@@ -21,7 +21,7 @@ namespace AYR
 			return height;
 		}
 
-		void clear()
+		inline void clear()
 		{
 			if(buf != nullptr)
 			{
@@ -34,23 +34,23 @@ namespace AYR
 			height = 0;
 		}
 
-		void resize(int _w, int _h)
+		inline void resize(int _w, int _h)
 		{
 			clear();
 			width = _w;
 			height = _h;
-			buf = new Vector3f*[height];
+			buf = new Vector3i*[height];
 			for (int i = 0; i < height; ++i)
-				buf[i] = new Vector3f[width];
+				buf[i] = new Vector3i[width];
 		}
 
-		Vector3f getBuf(int i, int j);
+		Vector3i getBuf(int i, int j);
 		void setBuf(int i, int j, Vector3f value);
 		virtual void outPut(std::ostream& o);
 	private:
 		int width;
 		int height;
-		Vector3f** buf;
+		Vector3i** buf;
 	};
 
 	class AYR_API ppm : public img
@@ -59,7 +59,6 @@ namespace AYR
 		virtual void outPut(std::ostream& o);
 
 		ppm(int _w, int _h): img(_w, _h) {};
-		ppm(): img() {};
 	};
 
 	// class AYR_API Texture : public img

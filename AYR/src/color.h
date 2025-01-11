@@ -1,6 +1,7 @@
 #pragma once
 
 #include"Core.h"
+
 namespace AYR
 {
 	class AYR_API Color
@@ -21,6 +22,7 @@ namespace AYR
 		Color operator * (float value) const;
 		Color operator / (float value) const;
 		static Color Lerp(const Color& left, const Color& right, float t);
+		static Color RandomColor();
 
 		// Just declare the constants
 		static const Color RED;

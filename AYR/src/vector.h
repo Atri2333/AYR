@@ -7,24 +7,25 @@
 
 namespace AYR
 {
-    class Vector3f
+    template<typename T>
+    class Vector3
     {
     public:
-        float x, y, z;
-        Vector3f() : x(0), y(0), z(0) {}
-        Vector3f(float xx) : x(xx), y(xx), z(xx) {}
-        Vector3f(float xx, float yy, float zz) : x(xx), y(yy), z(zz) {}
-        Vector3f(const Vector3f& v) : x(v.x), y(v.y), z(v.z) {}
-        Vector3f(const Color& c) : x(c.r * 255), y(c.g * 255), z(c.b * 255) {}
+        T x, y, z;
+        Vector3() : x(0), y(0), z(0) {}
+        Vector3(T xx) : x(xx), y(xx), z(xx) {}
+        Vector3(T xx, T yy, T zz) : x(xx), y(yy), z(zz) {}
+        Vector3(const Vector3& v) : x(v.x), y(v.y), z(v.z) {}
+        Vector3(const Color& c) : x(c.r * 255), y(c.g * 255), z(c.b * 255) {}
 
-        Vector3f operator *(const float& r) const
+        Vector3 operator *(const T& r) const
         {
-            return Vector3f(x * r, y * r, z * r);
+            return Vector3(x * r, y * r, z * r);
         }
 
-        Vector3f operator /(const float& r) const
+        Vector3 operator /(const T& r) const
         {
-            return Vector3f(x / r, y / r, z / r);
+            return Vector3(x / r, y / r, z / r);
         }
 
         float norm()
@@ -32,86 +33,93 @@ namespace AYR
             return std::sqrt(x * x + y * y + z * z);
         }
 
-        Vector3f normalized()
+        Vector3 normalized()
         {
             float n = norm();
             return Vector3f(x / n, y / n, z / n);
         }
 
-        Vector3f operator +(const Vector3f& v)const
+        Vector3 operator +(const Vector3& v)const
         {
-            return Vector3f(x + v.x, y + v.y, z + v.z);
+            return Vector3(x + v.x, y + v.y, z + v.z);
         }
 
-        Vector3f operator -(const Vector3f& v)const
+        Vector3 operator -(const Vector3& v)const
         {
-            return Vector3f(x - v.x, y - v.y, z - v.z);
+            return Vector3(x - v.x, y - v.y, z - v.z);
         }
 
-        Vector3f operator *(const Vector3f& v)const
+        Vector3 operator *(const Vector3& v)const
         {
-            return Vector3f(x * v.x, y * v.y, z * v.z);
+            return Vector3(x * v.x, y * v.y, z * v.z);
         }
 
-        Vector3f operator -()const
+        Vector3 operator -()const
         {
-            return Vector3f(-x, -y, -z);
+            return Vector3(-x, -y, -z);
         }
 
-        Vector3f& operator +=(const Vector3f& v)
+        Vector3& operator +=(const Vector3& v)
         {
             x += v.x; y += v.y; z += v.z;
             return *this;
         }
 
-        friend Vector3f operator *(const float& r, const Vector3f& v)
+        friend Vector3 operator *(const float& r, const Vector3& v)
         {
-            return Vector3f(v.x * r, v.y * r, v.z * r);
+            return Vector3(v.x * r, v.y * r, v.z * r);
         }
 
-        friend std::ostream& operator <<(std::ostream& o, const Vector3f& v)
+        friend std::ostream& operator <<(std::ostream& o, const Vector3& v)
         {
             return o << v.x << ',' << v.y << ',' << v.z;
         }
 
-        float operator [](int idx) const
+        T operator [](int idx) const
         {
             if (idx < 0 || idx >= 3)
                 throw std::out_of_range("Index out of range");
             return idx == 0 ? x : (idx == 1 ? y : z);
         }
 
-        float& operator [](int idx)
+        T& operator [](int idx)
         {
             if (idx < 0 || idx >= 3)
                 throw std::out_of_range("Index out of range");
             return idx == 0 ? x : (idx == 1 ? y : z);
         }
 
-        static Vector3f Min(const Vector3f& a, const Vector3f& b)
+        static Vector3 Min(const Vector3& a, const Vector3& b)
         {
-            return Vector3f(std::min(a.x, b.x), std::min(a.y, b.y),
+            return Vector3(std::min(a.x, b.x), std::min(a.y, b.y),
                 std::min(a.z, b.z));
         }
 
-        static Vector3f Max(const Vector3f& a, const Vector3f& b)
+        static Vector3 Max(const Vector3& a, const Vector3& b)
         {
-            return Vector3f(std::max(a.x, b.x), std::max(a.y, b.y),
+            return Vector3(std::max(a.x, b.x), std::max(a.y, b.y),
                 std::max(a.z, b.z));
         }
     };
 
-    class Vector2f
+    using Vector3f = Vector3<float>;
+    using Vector3i = Vector3<int>;
+
+    template<typename T>
+    class Vector2
     {
     public:
-        Vector2f() : x(0), y(0) {}
-        Vector2f(float xx) : x(xx), y(xx) {}
-        Vector2f(float xx, float yy) : x(xx), y(yy) {}
-        Vector2f operator * (const float& r) const { return Vector2f(x * r, y * r); }
-        Vector2f operator + (const Vector2f& v) const { return Vector2f(x + v.x, y + v.y); }
-        Vector2f operator - (const Vector2f& v) const { return Vector2f(x - v.x, y - v.y); }
-        float x, y;
+        Vector2() : x(0), y(0) {}
+        Vector2(T xx) : x(xx), y(xx) {}
+        Vector2(T xx, T yy) : x(xx), y(yy) {}
+        Vector2 operator * (const T& r) const { return Vector2(x * r, y * r); }
+        Vector2 operator + (const Vector2& v) const { return Vector2(x + v.x, y + v.y); }
+        Vector2 operator - (const Vector2& v) const { return Vector2(x - v.x, y - v.y); }
+        T x, y;
     };
+
+    using Vector2f = Vector2<float>;
+    using Vector2i = Vector2<int>;
 
     inline Vector3f lerp(const Vector3f& a, const Vector3f& b, float t)
     {

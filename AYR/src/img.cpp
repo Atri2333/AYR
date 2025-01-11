@@ -11,9 +11,9 @@ namespace AYR
 	}
 	img::img(int _w, int _h): width(_w), height(_h)
 	{
-		buf = new Vector3f* [_h];
+		buf = new Vector3i* [_h];
 		for (int i = 0; i < _h; ++i)
-			buf[i] = new Vector3f[_w];
+			buf[i] = new Vector3i[_w];
 	}
 
 	img::~img()
@@ -21,23 +21,30 @@ namespace AYR
 		if (buf != nullptr)
 		{
 			for (int i = 0; i < getHeight(); ++i)
-				delete[] buf[i];
+				delete[] buf[i],
+				std::cerr << i << '\n';
 			delete[] buf;
 		}
 	}
 
 	void img::setBuf(int i, int j, Vector3f value)
 	{
+		if (i < 0 || i >= height || j < 0 || j >= width)
+			return;
 		if (buf != nullptr)
-			buf[i][j] = value;
+		{
+			buf[i][j].x = (int)value.x;
+			buf[i][j].y = (int)value.y;
+			buf[i][j].z = (int)value.z;
+		}
 	}
 
-	Vector3f img::getBuf(int i, int j)
+	Vector3i img::getBuf(int i, int j)
 	{
 		if (buf != nullptr)
 			return buf[i][j];
 		else
-			return Vector3f(0, 0, 0);
+			return Vector3i(0, 0, 0);
 	}
 
 	void img::outPut(std::ostream& o)
@@ -53,10 +60,11 @@ namespace AYR
 		for (int i = 0; i < getHeight(); ++i)
 		{
 			for (int j = 0; j < getWidth(); ++j)
-				o << (int)getBuf(i, j).x << ' ' << (int)getBuf(i, j).y << ' ' << (int)getBuf(i, j).z << "\n";
+				o << getBuf(i, j).x << ' ' << getBuf(i, j).y << ' ' << getBuf(i, j).z << "\n";
 		}
 		std::flush(o);
 	}
+
 
 	// void Texture::outPut(std::ostream& o)
 	// {

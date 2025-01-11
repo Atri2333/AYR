@@ -1,11 +1,10 @@
 #include "color.h"
-
+#include <random>
 namespace AYR
 {
 	Color::Color(float cr, float cg, float cb, float ca)
 		: r(cr), g(cg), b(cb), a(ca)
 	{
-
 	}
 
 
@@ -47,6 +46,18 @@ namespace AYR
 	Color Color::Lerp(const Color& left, const Color& right, float t)
 	{
 		return left + (right - left) * t;
+	}
+
+	Color Color::RandomColor()
+	{
+		// 使用随机设备作为种子
+		static std::random_device rd;
+		// 使用 Mersenne Twister 引擎
+		static std::mt19937 gen(rd());
+		// 定义分布范围 [0, 1]
+		static std::uniform_real_distribution<float> dis(0.0f, 1.0f);
+
+		return Color(dis(gen), dis(gen), dis(gen), 1.0f);
 	}
 
 	const Color Color::RED(1.0f, 0.0f, 0.0f, 1.0f);
