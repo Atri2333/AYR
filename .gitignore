@@ -1,0 +1,9 @@
+# folders
+/bin
+/bin-int
+/.vs
+/.vscode
+
+# files
+*.user
+*.userprefs
