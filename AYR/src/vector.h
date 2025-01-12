@@ -15,7 +15,8 @@ namespace AYR
         Vector3() : x(0), y(0), z(0) {}
         Vector3(T xx) : x(xx), y(xx), z(xx) {}
         Vector3(T xx, T yy, T zz) : x(xx), y(yy), z(zz) {}
-        Vector3(const Vector3& v) : x(v.x), y(v.y), z(v.z) {}
+        template<typename U>
+        Vector3(const Vector3<U>& v) : x((T)v.x), y((T)v.y), z((T)v.z) {}
         Vector3(const Color& c) : x(c.r * 255), y(c.g * 255), z(c.b * 255) {}
 
         Vector3 operator *(const T& r) const
@@ -37,6 +38,12 @@ namespace AYR
         {
             float n = norm();
             return Vector3f(x / n, y / n, z / n);
+        }
+
+        Vector3 normalize()
+        {
+            float n = norm();
+            return *this = Vector3(x / n, y / n, z / n);
         }
 
         Vector3 operator +(const Vector3& v)const
@@ -112,6 +119,12 @@ namespace AYR
         Vector2() : x(0), y(0) {}
         Vector2(T xx) : x(xx), y(xx) {}
         Vector2(T xx, T yy) : x(xx), y(yy) {}
+
+        template<typename U>
+        Vector2(const Vector2<U>& v) : x((T)v.x), y((T)v.y) {}
+        template<typename U>
+        Vector2(const Vector3<U>& v) : x((T)v.x), y((T)v.y) {}
+        
         Vector2 operator * (const T& r) const { return Vector2(x * r, y * r); }
         Vector2 operator + (const Vector2& v) const { return Vector2(x + v.x, y + v.y); }
         Vector2 operator - (const Vector2& v) const { return Vector2(x - v.x, y - v.y); }

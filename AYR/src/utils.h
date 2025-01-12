@@ -19,6 +19,20 @@ namespace AYR
         return value;
     }
 
+    inline Vector3f BaryCentric(Vector2f P, Vector2f A, Vector2f B, Vector2f C)
+    {
+        float den1 = ((B.x - A.x) * (C.y - B.y) + (A.y - B.y) * (C.x - B.x));
+        if(den1 == 0)
+            return Vector3f(1, 0, 0);
+        float den2 = ((B.x - C.x) * (C.y - A.y) + (B.y - C.y) * (A.x - C.x));
+        if(den2 == 0)
+            return Vector3f(0, 1, 0);
+        float alpha = ((B.x - P.x) * (C.y - B.y) + (P.y - B.y) * (C.x - B.x)) / den1;
+        float beta = ((C.x - P.x) * (A.y - C.y) + (P.y - C.y) * (A.x - C.x)) / den2;
+        float gamma = 1 - alpha - beta;
+        return Vector3f(alpha, beta, gamma);
+    }
+
     AYR_API inline void ReadObj(const std::string& path, Mesh& mesh)
     {
         std::ifstream file(path);

@@ -21,8 +21,7 @@ namespace AYR
 		if (buf != nullptr)
 		{
 			for (int i = 0; i < getHeight(); ++i)
-				delete[] buf[i],
-				std::cerr << i << '\n';
+				delete[] buf[i];
 			delete[] buf;
 		}
 	}
@@ -45,6 +44,12 @@ namespace AYR
 			return buf[i][j];
 		else
 			return Vector3i(0, 0, 0);
+	}
+
+	void img::flipVertical()
+	{
+		for (int i = 0; i < height / 2; ++i)
+			std::swap(buf[i], buf[height - i - 1]);
 	}
 
 	void img::outPut(std::ostream& o)

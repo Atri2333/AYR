@@ -46,6 +46,7 @@ namespace AYR
 
 		Vector3i getBuf(int i, int j);
 		void setBuf(int i, int j, Vector3f value);
+		void flipVertical();
 		virtual void outPut(std::ostream& o);
 	private:
 		int width;
