@@ -4,7 +4,7 @@
 
 namespace AYR
 {
-	class Texture
+	class Texture // 1/14: not tested yet
 	{
 	public:
 		Texture();

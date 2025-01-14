@@ -8,9 +8,8 @@ namespace AYR
 	{
 	public:
 		float r, g, b, a;
-		Color(float cr, float cg, float cb, float ca);
-		Color() {};
-		~Color();
+		Color() = default;
+		Color(float cr, float cg, float cb, float ca=1.0f);
 
 		Color operator + (const Color& right) const;
 		Color operator+(const float c)

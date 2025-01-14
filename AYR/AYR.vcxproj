@@ -111,6 +111,8 @@ IF EXIST ..\bin\Release-windows-x86_64\AYR\AYR.dll\ (xcopy /Q /E /Y /I ..\bin\Re
     <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\vector.h" />
     <ClInclude Include="src\Texture.h" />
+    <ClInclude Include="src\Triangle.h" />
+    <ClInclude Include="vendor\include\OBJ_Loader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mesh.cpp" />
@@ -118,6 +120,7 @@ IF EXIST ..\bin\Release-windows-x86_64\AYR\AYR.dll\ (xcopy /Q /E /Y /I ..\bin\Re
     <ClCompile Include="src\gl.cpp" />
     <ClCompile Include="src\img.cpp" />
     <ClCompile Include="src\Texture.cpp" />
+    <ClCompile Include="src\Triangle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,6 +4,7 @@
 #include "Core.h"
 #include "vector.h"
 #include<iostream>
+#include <sstream>
 namespace AYR
 {
 	class AYR_API img

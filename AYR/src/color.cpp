@@ -7,11 +7,6 @@ namespace AYR
 	{
 	}
 
-
-	Color::~Color()
-	{
-	}
-
 	Color Color::operator + (const Color& right) const
 	{
 		Color returnValue(r + right.r, g + right.g, b + right.b, a + right.a);

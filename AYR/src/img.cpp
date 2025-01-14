@@ -59,15 +59,35 @@ namespace AYR
 
 	void ppm::outPut(std::ostream& o)
 	{
-		o << "P3" << "\n";
-		o << getWidth() << " " << getHeight() << "\n";
-		o << "255" << "\n";
+		// 使用字符串流来缓存输出
+		std::stringstream ss;
+		ss << "P3\n" << getWidth() << " " << getHeight() << "\n255\n";
+		
+		// 预分配一个足够大的字符串
+		std::string output;
+		output.reserve(getWidth() * getHeight() * 12); // 每个像素大约需要12个字符
+		
 		for (int i = 0; i < getHeight(); ++i)
 		{
 			for (int j = 0; j < getWidth(); ++j)
-				o << getBuf(i, j).x << ' ' << getBuf(i, j).y << ' ' << getBuf(i, j).z << "\n";
+			{
+				Vector3i pixel = getBuf(i, j);
+				ss << pixel.x << ' ' << pixel.y << ' ' << pixel.z << '\n';
+				
+				// 当缓冲区达到一定大小时刷新
+				if (ss.tellp() > 1024 * 1024) // 1MB
+				{
+					output += ss.str();
+					ss.str("");
+					ss.clear();
+				}
+			}
 		}
-		std::flush(o);
+		
+		// 输出剩余的数据
+		output += ss.str();
+		o << output;
+		o.flush();
 	}
 
 

@@ -1,19 +1,20 @@
 #pragma once
 
 #include "vector.h"
+#include "Triangle.h"
 #include <vector>
 
 namespace AYR
 {
+	// TODO(1/12): re-implement this class with a new class Triangle
 	class AYR_API Mesh
 	{
 	public:
 		Mesh();
 		~Mesh();
-        std::vector<Vector3f> vertices;
-        std::vector<Vector3f> normals;
-        std::vector<Vector2f> uvs;
 
-		std::vector<Vector3i> indexes;
+		std::vector<Triangle *> TriangleList; 
+
+		static void ReadObj(const std::string& path, Mesh& mesh);
 	};
 }
