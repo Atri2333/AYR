@@ -8,6 +8,7 @@ namespace AYR
 {
 	Mesh::Mesh()
 	{
+        tex = new Texture();
 	}
 
 	Mesh::~Mesh()

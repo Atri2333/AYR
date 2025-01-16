@@ -36,7 +36,7 @@ namespace AYR
             return Vector3(x / r, y / r, z / r);
         }
 
-        float norm()
+        float norm() const
         {
             return std::sqrt(x * x + y * y + z * z);
         }

@@ -25,7 +25,7 @@ namespace AYR
 
 		Matrix4x4 inverse() const;
 
-		static Matrix4x4 get_view_matrix(const Vector3f& eye);
+		static Matrix4x4 get_view_matrix(const Vector3f& eye, const Vector3f& lookAt, const Vector3f& up);
 
 		static Matrix4x4 get_model_matrix(float angle);
 

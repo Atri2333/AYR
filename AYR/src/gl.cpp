@@ -5,17 +5,17 @@
 #include<vector>
 namespace AYR
 {
-
+    //TODO(1/16): adjust the view port
     Renderer::Renderer(int width, int height) : width(width), height(height)
     {
         model = Matrix4x4::get_model_matrix(0);
-        view = Matrix4x4::get_view_matrix(Vector3f(0, 0, 10));
+        view = Matrix4x4::get_view_matrix(Vector3f(-5, 0, 5), Vector3f(0.5, -0, -0.5), Vector3f(0, 1, 0));
         projection = Matrix4x4::get_projection_matrix(45.0, 1, -0.1, -50);
 
         for(int i = 0; i < width * height; ++i)
         {
             frame_buffer.push_back(Vector3f(0, 0, 0));
-            z_buffer.push_back(std::numeric_limits<float>::min());
+            z_buffer.push_back(std::numeric_limits<float>::lowest());
         }
     }
 
@@ -61,19 +61,35 @@ namespace AYR
     // TODO(1/16): implement shader
     void Renderer::drawTriangle(const Triangle &tri, const Color& col)
     {
+        const Vector3f light_dir = Vector3f(0, 0, 1);
+
         Vector3f p1 = tri.v[0];
         Vector3f p2 = tri.v[1];
         Vector3f p3 = tri.v[2];
         Vector2i aabb_min = Vector2i(std::min(p1.x, std::min(p2.x, p3.x)), std::min(p1.y, std::min(p2.y, p3.y)));
         Vector2i aabb_max = Vector2i(std::max(p1.x, std::max(p2.x, p3.x)), std::max(p1.y, std::max(p2.y, p3.y)));
 
-        for (int x = std::max(0, aabb_min.x); x <= std::min(height - 1, aabb_max.x); ++x)
-            for (int y = std::max(0, aabb_min.y); y <= std::min(width - 1, aabb_max.y); ++y)
+        for (int x = std::max(0, aabb_min.x); x <= std::min(width - 1, aabb_max.x); ++x)
+            for (int y = std::max(0, aabb_min.y); y <= std::min(height - 1, aabb_max.y); ++y)
                 {
                     Vector3f bc_coord = BaryCentric(Vector2f(x, y), Vector2f(p1), Vector2f(p2), Vector2f(p3));
                     if(bc_coord.x < 0 || bc_coord.y < 0 || bc_coord.z < 0)
                         continue;
-                    
+                    float z = bc_coord.x * p1.z + bc_coord.y * p2.z + bc_coord.z * p3.z;
+                    if(z > z_buffer[y * width + x])
+                    {
+                        z_buffer[y * width + x] = z;
+                        
+                        auto normal = interpolate(bc_coord.x, bc_coord.y, bc_coord.z, tri.normal[0], tri.normal[1], tri.normal[2], 1);
+                        normal.normalized();
+                        auto tex_coord = interpolate(bc_coord.x, bc_coord.y, bc_coord.z, tri.tex_coords[0], tri.tex_coords[1], tri.tex_coords[2], 1);
+                        auto color = tri.tex->Sample(tex_coord.x, tex_coord.y);
+                        auto intensity = dotProduct(normal, light_dir);
+                        if(intensity > 0)
+                        {
+                            frame_buffer[y * width + x] = color;
+                        }
+                    }
                 }
     }
 
@@ -104,9 +120,14 @@ namespace AYR
         //     }
         // }
         auto mvp = projection * view * model;
+        Vector3f test1 = mvp * Vector4f(1, 1, 1, 1);
+        std::cerr << "test1.x = " << test1.x << " test1.y = " << test1.y << " test1.z = " << test1.z << std::endl;
+        Vector3f test2 = mvp * Vector4f(1, 1, -1, 1);
+        std::cerr << "test2.x = " << test2.x << " test2.y = " << test2.y << " test2.z = " << test2.z << std::endl;
         for(auto tri : mesh.TriangleList)
         {
             Triangle new_tri = *tri;
+
 
             // vertex transformation
             new_tri.v[0] = mvp * new_tri.v[0];
@@ -128,17 +149,27 @@ namespace AYR
                 vert.x = 0.5 * width * (vert.x + 1);
                 vert.y = 0.5 * height * (vert.y + 1);
 
-                // Mention(1/16): minus f1
-                vert.z = -f1 * vert.z + f2;
+                // Mention(1/16): minus f1?
+                vert.z = f1 * vert.z + f2;
             }
 
             for(int i = 0; i < 3; ++i)
             {
-                new_tri.setNormal(i, Vector3f(n[i].x, n[i].y, n[i].z));
+                new_tri.setNormal(i, Vector3f(n[i].x, n[i].y, n[i].z).normalized());
             }
+
+            new_tri.tex = mesh.tex;
 
             drawTriangle(new_tri, Color::WHITE);
         }
+    }
+
+    void Renderer::toImage(img* image)
+    {
+        for(int i = 0; i < height; ++i)
+            for(int j = 0; j < width; ++j)
+                image->setBuf(i, j, frame_buffer[i * width + j]);
+        //image->flipVertical();
     }
 }
 

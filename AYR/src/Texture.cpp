@@ -42,10 +42,11 @@ namespace AYR
             {
                 for (int x = 0; x < width; x++)
                 {
+                    int flipped_y = height - 1 - y;
                     int index = (y * width + x) * channels;
                     if (channels == 4)
                     {
-                        textureData[y][x] = Color(
+                        textureData[flipped_y][x] = Color(
                             data[index] / 255.0f,     // R
                             data[index + 1] / 255.0f, // G
                             data[index + 2] / 255.0f, // B
@@ -54,7 +55,7 @@ namespace AYR
                     }
                     else // channels == 3
                     {
-                        textureData[y][x] = Color(
+                        textureData[flipped_y][x] = Color(
                             data[index] / 255.0f,     // R
                             data[index + 1] / 255.0f, // G
                             data[index + 2] / 255.0f,  // B

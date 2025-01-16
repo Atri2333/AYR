@@ -8,7 +8,7 @@
 #include<vector>
 namespace AYR
 {
-	AYR_API class Renderer
+	class AYR_API Renderer
 	{
 	public:
 		Renderer(int width, int height);
@@ -17,6 +17,8 @@ namespace AYR
 		void setModel(const Matrix4x4& model);
 		void setView(const Matrix4x4& view);
 		void setProjection(const Matrix4x4& projection);
+
+		void toImage(img* image);
 
 	private:
 		void drawLine(const Vector2i& p1, const Vector2i& p2, const Vector3f& col, img *image);

@@ -35,6 +35,8 @@ namespace AYR
 			buf[i][j].x = (int)value.x;
 			buf[i][j].y = (int)value.y;
 			buf[i][j].z = (int)value.z;
+			if(buf[i][j].x > 255 || buf[i][j].y > 255 || buf[i][j].z > 255)
+				std::cerr << "buf[i][j].x = " << buf[i][j].x << " buf[i][j].y = " << buf[i][j].y << " buf[i][j].z = " << buf[i][j].z << std::endl;
 		}
 	}
 

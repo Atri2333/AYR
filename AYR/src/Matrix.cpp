@@ -146,8 +146,18 @@ namespace AYR
         return result;
     }
 
-    Matrix4x4 Matrix4x4::get_view_matrix(const Vector3f& eye)
+    Matrix4x4 Matrix4x4::get_view_matrix(const Vector3f& eye, const Vector3f& lookAt, const Vector3f& up)
     {
+        auto g = -lookAt; g.normalize();
+        auto t = up; t.normalize();
+        auto crs = crossProduct(g, t);
+        float rotate[4][4] = {
+            crs.x, crs.y, crs.z, 0,
+            t.x, t.y, t.z, 0,
+            -g.x, -g.y, -g.z, 0,
+            0, 0, 0, 1
+        };
+
         float translate[4][4] = {
             {1, 0, 0, -eye.x},
             {0, 1, 0, -eye.y},
@@ -155,16 +165,16 @@ namespace AYR
             {0, 0, 0, 1}
         };
         Matrix4x4 result(translate);
-        
-        return result;
+        Matrix4x4 R(rotate);
+        return R * result;
     }
 
     Matrix4x4 Matrix4x4::get_model_matrix(float angle)
     {
         float rotate[4][4] = {
-            {cos(angle), -sin(angle), 0, 0},
-            {sin(angle), cos(angle), 0, 0},
-            {0, 0, 1, 0},
+            {cos(angle), 0, sin(angle), 0},
+            {0, 1, 0, 0},
+            {-sin(angle), 0, cos(angle), 0},
             {0, 0, 0, 1}
         };
         constexpr float c = 2.5;
@@ -180,8 +190,8 @@ namespace AYR
 
     Matrix4x4 Matrix4x4::get_projection_matrix(float fov, float aspect, float zNear, float zFar)
     {
-        constexpr float MY_PI = 3.14159265358979323846;
-        float t{ std::abs(zNear) * std::tan(0.5f * fov * (float)MY_PI / 180) };
+        constexpr float MY_PI = 3.1415926;
+        float t{ std::abs(zNear) * std::tan(0.5f * fov * MY_PI / 180) };
         float b{ -t };
         float r{ t * aspect };
         float l{ -r };
