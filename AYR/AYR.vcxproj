@@ -103,6 +103,7 @@ IF EXIST ..\bin\Release-windows-x86_64\AYR\AYR.dll\ (xcopy /Q /E /Y /I ..\bin\Re
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Matrix.h" />
     <ClInclude Include="src\Mesh.h" />
     <ClInclude Include="src\color.h" />
     <ClInclude Include="src\Core.h" />
@@ -115,6 +116,7 @@ IF EXIST ..\bin\Release-windows-x86_64\AYR\AYR.dll\ (xcopy /Q /E /Y /I ..\bin\Re
     <ClInclude Include="vendor\include\OBJ_Loader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Matrix.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\color.cpp" />
     <ClCompile Include="src\gl.cpp" />

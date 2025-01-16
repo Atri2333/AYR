@@ -34,6 +34,32 @@ namespace AYR
         return Vector3f(alpha, beta, gamma);
     }
 
+    inline Vector3f interpolate(float alpha, float beta, float gamma, Vector3f A, Vector3f B, Vector3f C, float weight)
+    {
+        return (A * alpha + B * beta + C * gamma) / weight;
+    }
+
+    inline Vector2f interpolate(float alpha, float beta, float gamma, Vector2f A, Vector2f B, Vector2f C, float weight)
+    {
+        return (A * alpha + B * beta + C * gamma) / weight;
+    }
+
+    inline bool isPointInPolygon(const Vector2i& p, const std::vector<Vector2i>& polygon)
+    {
+        std::vector<int> sgn{};
+        for (int i = 0; i < polygon.size(); ++i)
+        {
+            Vector2i v1 = polygon[i] - p;
+            Vector2i v2 = polygon[(i + 1) % polygon.size()] - p;
+            sgn.push_back(v1.x * v2.y - v1.y * v2.x);
+        }
+
+        // check if all the sign is the same or there is a zero
+        return std::any_of(sgn.begin(), sgn.end(), [](int x) { return x == 0; }) || 
+               (std::all_of(sgn.begin(), sgn.end(), [](int x) { return x > 0; }) || 
+                std::all_of(sgn.begin(), sgn.end(), [](int x) { return x < 0; }));
+    }
+
     //AYR_API inline void ReadObj(const std::string& path, Mesh& mesh)
     //{
     //    std::ifstream file(path);

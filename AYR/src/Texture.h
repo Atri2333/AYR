@@ -10,7 +10,7 @@ namespace AYR
 		Texture();
 		~Texture();
 
-		void LoadTexture(const char* path);
+		bool LoadTexture(const char* path);
 		Color Sample(float u, float v);
 	private:
 		int width, height;

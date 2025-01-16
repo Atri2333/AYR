@@ -2,6 +2,7 @@
 
 #include "vector.h"
 #include "Triangle.h"
+#include "Texture.h"
 #include <vector>
 
 namespace AYR
@@ -14,7 +15,9 @@ namespace AYR
 		~Mesh();
 
 		std::vector<Triangle *> TriangleList; 
+		Texture* tex;
 
 		static void ReadObj(const std::string& path, Mesh& mesh);
+		static void ReadTexture(const std::string& path, Mesh& mesh);
 	};
 }

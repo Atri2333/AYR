@@ -8,6 +8,8 @@
 namespace AYR
 {
     template<typename T>
+    class Vector4;
+    template<typename T>
     class Vector3
     {
     public:
@@ -17,6 +19,11 @@ namespace AYR
         Vector3(T xx, T yy, T zz) : x(xx), y(yy), z(zz) {}
         template<typename U>
         Vector3(const Vector3<U>& v) : x((T)v.x), y((T)v.y), z((T)v.z) {}
+        
+        // maybe v.w==0, but this is used for homogeneous coordinates, not vectors.
+        // I'll check it soon.
+        template<typename U>
+        Vector3(const Vector4<U>& v) : x((T)v.x / v.w), y((T)v.y / v.w), z((T)v.z / v.w) {}
         Vector3(const Color& c) : x(c.r * 255), y(c.g * 255), z(c.b * 255) {}
 
         Vector3 operator *(const T& r) const
@@ -126,6 +133,7 @@ namespace AYR
         Vector2(const Vector3<U>& v) : x((T)v.x), y((T)v.y) {}
         
         Vector2 operator * (const T& r) const { return Vector2(x * r, y * r); }
+        Vector2 operator / (const T& r) const { return Vector2(x / r, y / r); }
         Vector2 operator + (const Vector2& v) const { return Vector2(x + v.x, y + v.y); }
         Vector2 operator - (const Vector2& v) const { return Vector2(x - v.x, y - v.y); }
         T x, y;
@@ -133,6 +141,30 @@ namespace AYR
 
     using Vector2f = Vector2<float>;
     using Vector2i = Vector2<int>;
+
+    // Mention(1/15): this class is mainly used for homogeneous coordinates
+    template<typename T>
+    class Vector4
+    {
+    public:
+        T x, y, z, w;
+        Vector4() : x(0), y(0), z(0), w(0) {}
+        Vector4(T xx) : x(xx), y(xx), z(xx), w(1) {}
+        Vector4(T xx, T yy, T zz) : x(xx), y(yy), z(zz), w(1) {}
+        
+        Vector4(T xx, T yy, T zz, T ww) : x(xx), y(yy), z(zz), w(ww) {}
+        template<typename U>
+        Vector4(const Vector4<U>& v) : x((T)v.x), y((T)v.y), z((T)v.z), w((T)v.w) {}
+        template<typename U>
+        Vector4(const Vector3<U>& v) : x((T)v.x), y((T)v.y), z((T)v.z), w(1) {}
+        template<typename U>
+        Vector4(const Vector3<U>& v, T ww) : x((T)v.x), y((T)v.y), z((T)v.z), w(ww) {}
+
+
+    };
+
+    using Vector4f = Vector4<float>;
+    using Vector4i = Vector4<int>;
 
     inline Vector3f lerp(const Vector3f& a, const Vector3f& b, float t)
     {

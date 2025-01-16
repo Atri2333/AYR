@@ -20,6 +20,10 @@ namespace AYR
 				tri = nullptr;
 			}
 		}
+        if (tex)
+        {
+            delete tex;
+        }
 	}
 
 	void Mesh::ReadObj(const std::string& path, Mesh& mesh)
@@ -45,6 +49,16 @@ namespace AYR
                 }
                 mesh.TriangleList.push_back(tri);
             }
+        }
+    }
+
+    void Mesh::ReadTexture(const std::string& path, Mesh& mesh)
+    {
+        // Mention(1/15): this kind of API may be naive
+        if (!mesh.tex->LoadTexture(path.c_str()))
+        {
+            std::cerr << "Mesh Read Texture ERROR!" << std::endl;
+            return;
         }
     }
 }

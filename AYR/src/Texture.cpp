@@ -17,7 +17,7 @@ namespace AYR
         }
     }
 
-	void Texture::LoadTexture(const char* path)
+	bool Texture::LoadTexture(const char* path)
 	{
         if (textureData != nullptr)
         {
@@ -66,10 +66,14 @@ namespace AYR
 
             // 释放原始图片数据
             stbi_image_free(data);
+            
+            return true;
         }
         else
         {
             std::cerr << "Failed to load texture: " << path << std::endl;
+
+            return false;
         }
 	}
 
