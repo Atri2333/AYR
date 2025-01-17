@@ -16,6 +16,14 @@ namespace AYR
 		{
 			return Color(r + c, g + c, b + c, a);
 		}
+		Color& operator += (const Color& right)
+		{
+			r += right.r;
+			g += right.g;
+			b += right.b;
+			a += right.a;
+			return *this;
+		}
 		Color operator - (const Color& right) const;
 		Color operator * (const Color& right) const;
 		Color operator * (float value) const;

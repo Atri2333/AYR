@@ -88,6 +88,8 @@ namespace AYR
         v = Clamp(0.0f, 1.0f, v);
         int x = static_cast<int>(u * width);
         int y = static_cast<int>(v * height);
+        if (x >= width) x = width - 1;
+        if (y >= height) y = height - 1;
         return textureData[y][x];
     }
 }

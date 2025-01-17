@@ -27,15 +27,40 @@ namespace AYR
         }
 	}
 
+    // Mention(1/17): Suppose the center is in (0, 0, 0), maybe I will improve it soon.
+    void Mesh::Resize(Mesh& mesh, float scale)
+    {
+        for(auto &tri : mesh.TriangleList)
+        {
+            for(auto &v : tri->v)
+            {
+                v = v * scale;
+            }
+        }
+    }
+
+    void Mesh::Translate(Mesh& mesh, Vector3f trans)
+    {
+        for(auto &tri : mesh.TriangleList)
+        {
+            for(auto &v : tri->v)
+            {
+                v = v + trans;
+            }
+        }
+    }
+
 	void Mesh::ReadObj(const std::string& path, Mesh& mesh)
     {
         objl::Loader Loader;
+        
         bool loadout = Loader.LoadFile(path);
         if(!loadout)
         {
             std::cerr << "Failed to open file: " << path << std::endl;
             return;
         }
+        
         // TODO(1/12): adjust objl to Mesh API
         for(auto loadmesh : Loader.LoadedMeshes)
         {

@@ -109,6 +109,7 @@ IF EXIST ..\bin\Release-windows-x86_64\AYR\AYR.dll\ (xcopy /Q /E /Y /I ..\bin\Re
     <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\gl.h" />
     <ClInclude Include="src\img.h" />
+    <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\vector.h" />
     <ClInclude Include="src\Texture.h" />
@@ -121,6 +122,7 @@ IF EXIST ..\bin\Release-windows-x86_64\AYR\AYR.dll\ (xcopy /Q /E /Y /I ..\bin\Re
     <ClCompile Include="src\color.cpp" />
     <ClCompile Include="src\gl.cpp" />
     <ClCompile Include="src\img.cpp" />
+    <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\Triangle.cpp" />
   </ItemGroup>

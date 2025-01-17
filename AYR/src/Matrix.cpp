@@ -148,7 +148,7 @@ namespace AYR
 
     Matrix4x4 Matrix4x4::get_view_matrix(const Vector3f& eye, const Vector3f& lookAt, const Vector3f& up)
     {
-        auto g = -lookAt; g.normalize();
+        auto g = lookAt; g.normalize();
         auto t = up; t.normalize();
         auto crs = crossProduct(g, t);
         float rotate[4][4] = {
@@ -208,7 +208,7 @@ namespace AYR
         float ortho2[4][4] = {
             {1, 0, 0, 0},
             {0, 1, 0, 0},
-            {0, 0, 1, (zNear + zFar) / 2},
+            {0, 0, 1, -(zNear + zFar) / 2},
             {0, 0, 0, 1}
         };
 

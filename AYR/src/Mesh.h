@@ -17,7 +17,9 @@ namespace AYR
 		std::vector<Triangle *> TriangleList; 
 		Texture* tex;
 
+		static void Resize(Mesh& mesh, float scale);
 		static void ReadObj(const std::string& path, Mesh& mesh);
 		static void ReadTexture(const std::string& path, Mesh& mesh);
+		static void Translate(Mesh& mesh, Vector3f trans);
 	};
 }
