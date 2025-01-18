@@ -87,4 +87,29 @@ namespace AYR
             return;
         }
     }
+
+    void Mesh::normalizeModel(Mesh& mesh)
+    {
+        // TODO(1/17): normalize the model
+        Vector3f center = Vector3f(0, 0, 0);
+        for(auto &tri : mesh.TriangleList)
+        {
+            for(auto &v : tri->v)
+            {
+                center = center + v;
+            }
+        }
+        center = center / mesh.TriangleList.size() / 3;
+        Translate(mesh, -center);
+
+        float maxSize = 0;
+        for(auto &tri : mesh.TriangleList)
+        {
+            for(auto &v : tri->v)
+            {
+                maxSize = std::max(maxSize, v.norm());
+            }
+        }
+        Resize(mesh, 1.0f / maxSize);
+    }
 }

@@ -58,8 +58,6 @@ namespace AYR
 
         for(auto& light : lights)
         {
-            // std::cerr << "light position: " << light.position.x << " " << light.position.y << " " << light.position.z << std::endl;
-            // std::cerr << "eye position: " << eye_pos.x << " " << eye_pos.y << " " << eye_pos.z << std::endl;
             Vector3f l = (light.position - view_pos).normalized();
             Vector3f v = (eye_pos - view_pos).normalized();
             Vector3f h = (l + v).normalized();
@@ -72,7 +70,7 @@ namespace AYR
 
             final_color += Color(diffuse.x, diffuse.y, diffuse.z) + Color(specular.x, specular.y, specular.z);
         }
-        //std::cerr << "final_color: " << final_color.r << " " << final_color.g << " " << final_color.b << std::endl;
+//std::cerr << "final_color: " << final_color.r << " " << final_color.g << " " << final_color.b << std::endl;
         // Clamp the color to be between 0 and 1
         final_color.r = Clamp(0.0f, 1.0f, final_color.r);
         final_color.g = Clamp(0.0f, 1.0f, final_color.g);

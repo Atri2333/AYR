@@ -11,14 +11,15 @@ int main()
     AYR::Mesh* model = new AYR::Mesh();
     AYR::Mesh::ReadObj("spot_triangulated_good.obj", *model);
     AYR::Mesh::ReadTexture("spot_texture.png", *model);
-    AYR::Mesh::Resize(*model, 0.7f);
+    //AYR::Mesh::normalizeModel(*model);
+    //AYR::Mesh::Resize(*model, f);
 
     AYR::Mesh* floor = new AYR::Mesh();
     
     AYR::Mesh::ReadObj("floor.obj", *floor);
     AYR::Mesh::ReadTexture("floor_diffuse.tga", *floor);
     AYR::Mesh::Resize(*floor, 2.5f);
-    AYR::Mesh::Translate(*floor, AYR::Vector3f(0, 2, 0));
+    AYR::Mesh::Translate(*floor, AYR::Vector3f(0, 1.5, 0));
 
     AYR::Renderer renderer(width, height);
     renderer.setEyePos(AYR::Vector3f(7, 0, -7));

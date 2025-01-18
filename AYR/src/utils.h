@@ -44,6 +44,7 @@ namespace AYR
         return (A * alpha + B * beta + C * gamma) / weight;
     }
 
+    // 需要是凸多边形，但在本项目没用到
     inline bool isPointInPolygon(const Vector2i& p, const std::vector<Vector2i>& polygon)
     {
         std::vector<int> sgn{};

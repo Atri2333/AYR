@@ -21,5 +21,6 @@ namespace AYR
 		static void ReadObj(const std::string& path, Mesh& mesh);
 		static void ReadTexture(const std::string& path, Mesh& mesh);
 		static void Translate(Mesh& mesh, Vector3f trans);
+		static void normalizeModel(Mesh& mesh);
 	};
 }

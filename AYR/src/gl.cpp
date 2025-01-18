@@ -10,7 +10,7 @@ namespace AYR
     {
         model = Matrix4x4::get_model_matrix(0);
         view = Matrix4x4::get_view_matrix(eye_pos, LookAt, Up);
-        projection = Matrix4x4::get_projection_matrix(45.0, 1, -0.0001, -50);
+        projection = Matrix4x4::get_projection_matrix(45.0, 1, -0.1, -50);
 
         lights.clear();
 
@@ -159,14 +159,14 @@ namespace AYR
         //     }
         // }
         auto mvp = projection * view * model;
-        Vector3f test1 = mvp * Vector4f(1, 1, 1, 1);
+        /*Vector3f test1 = mvp * Vector4f(1, 1, 1, 1);
         std::cerr << "test1.x = " << test1.x << " test1.y = " << test1.y << " test1.z = " << test1.z << std::endl;
         Vector3f test2 = mvp * Vector4f(1, 1, -1, 1);
         std::cerr << "test2.x = " << test2.x << " test2.y = " << test2.y << " test2.z = " << test2.z << std::endl;
         Vector3f test3 = mvp * Vector4f(-1, 1, 1, 1);
         std::cerr << "test1.x = " << test3.x << " test1.y = " << test3.y << " test1.z = " << test3.z << std::endl;
         Vector3f test4 = mvp * Vector4f(-1, 1, -1, 1);
-        std::cerr << "test2.x = " << test4.x << " test2.y = " << test4.y << " test2.z = " << test4.z << std::endl;
+        std::cerr << "test2.x = " << test4.x << " test2.y = " << test4.y << " test2.z = " << test4.z << std::endl;*/
 
         trans_lights.clear();
         for (auto &l : lights)
